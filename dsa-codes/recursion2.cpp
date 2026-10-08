@@ -88,6 +88,38 @@ int countWays(int numStairs)
 
     return countWays(numStairs - 1) + countWays(numStairs - 2);
 }
+int reverseNumber(int n, int rev)
+{
+    if(n == 0)
+        return rev;
+
+    return reverseNumber(n / 10, rev * 10 + n % 10);
+}
+bool palindrome(string s, int left, int right)
+{
+    if(left >= right)
+        return true;
+
+    if(s[left] != s[right])
+        return false;
+
+    return palindrome(s, left + 1, right - 1);
+}
+void subsets(int arr[], int n, int index)
+{
+    if(index == n)
+    {
+        cout << endl;
+        return;
+    }
+
+    // Don't include arr[index]
+    subsets(arr, n, index + 1);
+
+    // Include arr[index]
+    cout << arr[index] << " ";
+    subsets(arr, n, index + 1);
+}
 int main() {
 	cout<<pow(2,3)<<endl;
 	cout<<digits(20)<<endl;
