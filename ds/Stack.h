@@ -99,7 +99,7 @@ class Stack
 		{
 			delete[] data;
 		}
-		T getTop()
+		int getTop()
 		{
 			if (isEmpty()) 
 			{

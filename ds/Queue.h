@@ -114,7 +114,7 @@ class Queue
 			{
 				throw invalid_argument("cant dequeue from empty queue");
 			}
-			cout<<"queue: ";
+			cout<<"Elements in the circular queue are: ";
 			for(int i=0; i<elements; i++)
 			{
 				cout<<data[(front+i)%capacity]<<" ";	
@@ -126,6 +126,18 @@ class Queue
 			front = capacity-1;
 			rear = capacity-1;
 			elements = 0;
+		}
+		T getfront()
+		{
+			return front;
+		}
+		T getrear()
+		{
+			return rear;
+		}
+		int getNoofElements()
+		{
+			return elements;
 		}
 };
 # endif

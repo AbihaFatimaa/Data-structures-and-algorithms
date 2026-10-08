@@ -151,8 +151,6 @@ string toPostfix(string infix)
 
         i++;
     }
-
-    // Pop remaining operators
     while (!s.isEmpty())
     {
         postfix += s.pop();
