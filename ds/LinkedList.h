@@ -1,4 +1,3 @@
-
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 
@@ -79,20 +78,7 @@ public:
         return head == nullptr;
     }
 
-    // Count nodes
-    int countNodes()
-    {
-        int count = 0;
-        Node<T>* current = head;
-
-        while (current != nullptr)
-        {
-            count++;
-            current = current->next;
-        }
-
-        return count;
-    }
+    
 
     // Search for a value
     bool search(T v)
@@ -318,6 +304,244 @@ LinkedList<T>& operator=(const LinkedList<T>& other)
     }
 
     return *this;
+}
+// Count nodes
+    int countNodes()
+    {
+        int count = 0;
+        Node<T>* current = head;
+
+        while (current != nullptr)
+        {
+            count++;
+            current = current->next;
+        }
+
+        return count;
+    }
+
+//---task 1----
+bool moveKthNodeToFront(int k)
+{
+	if (k == 1)
+	{
+		return true;
+	}
+	if(k < 1)
+	{
+		return false;
+	}
+	int len = countNodes();
+	if(k>len)
+	{
+		return false;
+	}
+	Node<T>* curr = head;
+	Node<T>* prev = nullptr;
+	for(int i=1; i<k; i++)
+	{
+		prev = curr;
+		curr = curr->next;
+	}
+	prev->next = curr->next;
+	curr->next = head;
+	head = curr;
+	
+	return true;
+}
+//----Task 2----
+void split(LinkedList<T>& list1, LinkedList<T>& list2)
+{
+    Node<T>* current = head;
+    int position = 1;
+    while (current != nullptr)
+    {
+        Node<T>* nextNode = current->next;
+
+        current->next = nullptr;
+
+        if (position % 2 != 0)
+        {
+            if (list1.head == nullptr)
+            {
+                list1.head = current;
+            }
+            else
+            {
+                Node<T>* temp = list1.head;
+
+                while (temp->next != nullptr)
+                {
+                    temp = temp->next;
+                }
+
+                temp->next = current;
+            }
+        }
+        else
+        {
+            if (list2.head == nullptr)
+            {
+                list2.head = current;
+            }
+            else
+            {
+                Node<T>* temp = list2.head;
+
+                while (temp->next != nullptr)
+                {
+                    temp = temp->next;
+                }
+
+                temp->next = current;
+            }
+        }
+
+        current = nextNode;
+        position++;
+    }
+
+    head = nullptr;
+}
+void reverseList()
+{
+    Node<T>* prev = nullptr;
+    Node<T>* current = head;
+    Node<T>* nextNode = nullptr;
+    while (current != nullptr)
+    {
+        nextNode = current->next;
+
+        current->next = prev;
+
+        prev = current;
+        current = nextNode;
+    }
+    head = prev;
+}
+
+//---task 3-----
+void alternateMerge (LinkedList& list1, LinkedList& list2)
+{
+    Node<T>* current1 = list1.head;
+    Node<T>* current2 = list2.head;
+    Node<T>* tail = nullptr;
+    while (current1 != nullptr && current2 != nullptr)
+    {
+        // Save the next nodes before changing links
+        Node<T>* next1 = current1->next;
+        Node<T>* next2 = current2->next;
+        // Take a node from list1
+        current1->next = nullptr;
+
+        if (head == nullptr)
+        {
+            head = current1;
+        }
+        else
+        {
+            tail->next = current1;
+        }
+        tail = current1;
+        // Take a node from list2
+        current2->next = nullptr;
+        tail->next = current2;
+        tail = current2;
+        // Move to the next nodes of the original lists
+        current1 = next1;
+        current2 = next2;
+    }
+    // Empty the original lists
+    list1.head = nullptr;
+    list2.head = nullptr;
+}
+void removeDuplicates()
+{
+    Node<T>* current = head;
+    while (current != nullptr)
+    {
+        Node<T>* previous = current;
+        Node<T>* temp = current->next;
+        while (temp != nullptr)
+        {
+            if (temp->info == current->info)
+            {
+                previous->next = temp->next;
+                delete temp;
+
+                temp = previous->next;
+            }
+            else
+            {
+                previous = temp;
+                temp = temp->next;
+            }
+        }
+
+        current = current->next;
+    }
+}
+bool removeKthNode(int k, int& val)
+{
+    if (k <= 0 || head == nullptr)
+    {
+        return false;
+    }
+
+    Node<T>* current = head;
+    Node<T>* previous = nullptr;
+
+    int position = 1;
+
+    while (current != nullptr && position < k)
+    {
+        previous = current;
+        current = current->next;
+        position++;
+    }
+
+    if (current == nullptr)
+    {
+        return false;
+    }
+
+    val = current->info;
+
+    if (previous == nullptr)
+    {
+        head = head->next;
+    }
+    else
+    {
+        previous->next = current->next;
+    }
+
+    delete current;
+
+    return true;
+}
+void combine(LinkedList<T>& list1, LinkedList<T>& list2)
+{
+    if (list1.head == nullptr)
+    {
+        head = list2.head;
+    }
+    else
+    {
+        head = list1.head;
+
+        Node<T>* temp = list1.head;
+
+        while (temp->next != nullptr)
+        {
+            temp = temp->next;
+        }
+
+        temp->next = list2.head;
+    }
+
+    list1.head = nullptr;
+    list2.head = nullptr;
 }
 };
 
