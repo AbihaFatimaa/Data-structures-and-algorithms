@@ -1,0 +1,98 @@
+rotate left by k values:
+void rotateLeft(Queue<int>& q, int n, int k) {
+    if (n == 0)
+        return;
+
+    k = k % n;
+
+    for (int i = 0; i < k; i++) {
+        int x = q.getFront();
+        q.dequeue();
+        q.enqueue(x);
+    }
+}
+ generate binary:
+void generateBinary(int n) {
+    Queue<string> q;
+    q.enqueue("1");
+
+    for (int i = 0; i < n; i++) {
+        string current = q.getFront();
+        q.dequeue();
+
+        cout << current << " ";
+
+        q.enqueue(current + "0");
+        q.enqueue(current + "1");
+    }
+}
+int a[] = {4, 5, 2, 10, 8};
+int n = 5;
+
+int s[5], top = -1, ans[5];
+
+for (int i = n - 1; i >= 0; i--) {
+    while (top != -1 && a[s[top]] <= a[i]) {
+        top--;
+    }
+
+    if (top == -1)
+        ans[i] = -1;
+    else
+        ans[i] = a[s[top]];
+
+    s[++top] = i;
+}
+
+for (int i = 0; i < n; i++)
+    cout << ans[i] << " ";
+
+void moveEvenToRear(Queue<int>& q, Queue<int>& temp, int n) {
+    for (int i = 0; i < n; i++) {
+        int x = q.getFront();
+        q.dequeue();
+
+        if (x % 2 == 0) {
+            temp.enqueue(x);
+        } else {
+            q.enqueue(x);
+        }
+    }
+
+    while (!temp.isEmpty()) {
+        int x = temp.getFront();
+        temp.dequeue();
+        q.enqueue(x);
+    }
+}
+
+int reverseNumber(int n, int rev)
+{
+    if(n == 0)
+        return rev;
+
+    return reverseNumber(n / 10, rev * 10 + n % 10);
+}
+
+void hanoi(int n, char A, char B, char C)
+{
+    if (n == 1)
+    {
+        cout << "Move disk from "
+             << A << " to " << C << endl;
+        return;
+    }
+
+    hanoi(n - 1, A, C, B);
+
+    cout << "Move disk from "
+         << A << " to " << C << endl;
+
+    hanoi(n - 1, B, A, C);
+}
+
+int countDigits(int n)
+{
+    if (n < 10) return 1;
+    return 1 + countDigits(n / 10);
+}
